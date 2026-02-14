@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // La fecha secreta: 01/07/2024
     // Input tipo date devuelve formato ISO: YYYY-MM-DD (2024-07-01)
-    const SECRET_DATE = "2024-07-01";
+    const SECRET_DATE = "2024-07-03";
     
     // Mostrar modal de bienvenida primero
     showWelcomeModal();
