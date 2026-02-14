@@ -1,0 +1,30 @@
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos de editor
+*.swp
+*.swo
+*~
+
+# Archivos temporales
+*.tmp
+*.temp
+
+# Logs
+*.log
+npm-debug.log*
+
+# Archivos de audio (grandes)
+# Descomenta la siguiente línea si quieres ignorar archivos de audio
+# *.mp3
+# *.wav
+# *.ogg
+
+# Archivos de configuración local
+.vscode/
+.idea/
+
+# Carpeta de node_modules si usas npm
+node_modules/

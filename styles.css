@@ -1,0 +1,1398 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(255, 192, 203, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 182, 193, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255, 228, 225, 0.2) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px; /* Volvemos al padding original */
+}
+
+.main-title {
+    text-align: center;
+    font-size: 3em;
+    color: #d63384;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 40px;
+    animation: fadeInDown 1s ease-out;
+}
+
+.love-messages {
+    position: relative;
+}
+
+.message-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
+    margin: 30px 0;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255, 192, 203, 0.3);
+    transition: all 0.3s ease;
+    animation: fadeInUp 1s ease-out;
+    animation-fill-mode: both;
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+/* Diseño lado a lado */
+.message-card.card-left {
+    flex-direction: row;
+}
+
+.message-card.card-right {
+    flex-direction: row-reverse;
+}
+
+.card-text-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.message-card:nth-child(2) { animation-delay: 0.2s; }
+.message-card:nth-child(3) { animation-delay: 0.4s; }
+.message-card:nth-child(4) { animation-delay: 0.6s; }
+.message-card:nth-child(5) { animation-delay: 0.8s; }
+.message-card:nth-child(6) { animation-delay: 1s; }
+
+.message-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.message-card h2 {
+    color: #d63384;
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.message-card p {
+    color: #495057;
+    font-size: 0.9em;
+    line-height: 1.6;
+    text-align: center;
+    font-style: italic;
+}
+
+/* Estilos para el contenedor de fotos rotativas */
+.card-photo-container {
+    position: relative;
+    width: 280px;
+    min-width: 280px;
+    height: 320px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    flex-shrink: 0;
+}
+
+.card-photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.card-photo.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+.floating-hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.heart {
+    position: absolute;
+    font-size: 30px;
+    animation: float 6s ease-in-out infinite;
+    opacity: 0.7;
+}
+
+.heart:nth-child(1) { left: 10%; animation-delay: 0s; }
+.heart:nth-child(2) { left: 20%; animation-delay: 1s; }
+.heart:nth-child(3) { left: 80%; animation-delay: 2s; }
+.heart:nth-child(4) { left: 90%; animation-delay: 3s; }
+.heart:nth-child(5) { left: 60%; animation-delay: 4s; }
+.heart:nth-child(6) { left: 40%; animation-delay: 5s; }
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #fff 0%, #ffeef0 100%);
+    margin: 20px auto;
+    padding: 40px;
+    border-radius: 25px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    border: 2px solid rgba(214, 51, 132, 0.2);
+    position: relative;
+    animation: modalSlideIn 0.5s ease-out;
+}
+
+.modal-content h2 {
+    color: #d63384;
+    font-size: 2.2em;
+    margin-bottom: 20px;
+}
+
+.modal-content p {
+    color: #495057;
+    font-size: 1.2em;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+#secretInput {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1em;
+    border: 2px solid #ffc0cb;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    background: white;
+    color: #495057;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    text-align: center;
+    cursor: pointer;
+}
+
+#secretInput:focus {
+    border-color: #d63384;
+    box-shadow: 0 0 15px rgba(214, 51, 132, 0.3);
+}
+
+/* Personalizar el calendario del input date */
+#secretInput::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(45%) sepia(100%) saturate(500%) hue-rotate(300deg);
+    font-size: 1.2em;
+}
+
+#secretInput:hover {
+    border-color: #d63384;
+    transform: translateY(-2px);
+}
+
+#submitSecret {
+    background: linear-gradient(135deg, #d63384 0%, #e83e8c 100%);
+    color: white;
+    padding: 12px 30px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#submitSecret:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(214, 51, 132, 0.3);
+}
+
+/* Question Modal */
+.question-modal {
+    max-width: 600px;
+}
+
+/* Estilos especiales para el modal final (Sí/No) */
+#finalModal .modal-content {
+    max-width: 800px;
+    width: 95%;
+    padding: 30px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+#finalModal #finalText {
+    text-align: center;
+    color: #fff;
+}
+
+#finalModal #finalText strong {
+    font-weight: 700;
+    color: #fff;
+}
+
+#finalModal #finalText p {
+    color: inherit;
+}
+
+.special-question {
+    font-size: 1.5em !important;
+    font-weight: bold;
+    color: #d63384 !important;
+    margin-bottom: 35px !important;
+}
+
+.buttons-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.answer-btn {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    min-width: 180px;
+}
+
+.yes-btn {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+}
+
+.yes-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(40, 167, 69, 0.4);
+}
+
+.no-btn {
+    background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
+    color: white;
+    position: relative;
+}
+
+.no-btn.moving {
+    transition: all 0.3s ease;
+}
+
+/* Final Message */
+.final-content {
+    max-width: 600px;
+}
+
+.celebration {
+    margin-top: 30px;
+    font-size: 2em;
+}
+
+.celebration-heart {
+    display: inline-block;
+    margin: 0 10px;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+.celebration-heart:nth-child(1) { animation-delay: 0.1s; }
+.celebration-heart:nth-child(2) { animation-delay: 0.2s; }
+.celebration-heart:nth-child(3) { animation-delay: 0.3s; }
+.celebration-heart:nth-child(4) { animation-delay: 0.4s; }
+.celebration-heart:nth-child(5) { animation-delay: 0.5s; }
+
+/* Control de música */
+.music-control {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+}
+
+.music-btn {
+    background: rgba(214, 51, 132, 0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(214, 51, 132, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.music-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(214, 51, 132, 0.4);
+}
+
+.music-btn.paused {
+    background: rgba(108, 117, 125, 0.9);
+}
+
+/* Video miniatura */
+.video-thumbnail {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 200px;
+    height: 150px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(214, 51, 132, 0.5);
+    display: block;
+}
+
+.video-thumbnail.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+}
+
+.video-thumbnail video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 13px;
+}
+
+.video-info {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/* Diagnóstico Button */
+.diagnose-btn {
+    background: rgba(255, 165, 0, 0.9) !important;
+    font-size: 18px !important;
+}
+
+.diagnose-btn:hover {
+    background: rgba(255, 140, 0, 0.9) !important;
+}
+
+/* Modal de Bienvenida */
+.welcome-modal {
+    z-index: 10001 !important;
+    background: rgba(0, 0, 0, 0.3);
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+.welcome-content {
+    max-width: 900px;
+    width: 95%;
+    padding: 50px 40px;
+    margin: 20px auto !important;
+    border-radius: 30px;
+    overflow: visible;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+    box-shadow: 
+        0 20px 60px rgba(0,0,0,0.3),
+        0 0 100px rgba(255, 154, 158, 0.4);
+    animation: modalSlideIn 0.8s ease-out;
+    position: relative;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.welcome-text-container {
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.welcome-message {
+    font-size: 1.4em;
+    color: #495057;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    font-style: italic;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+.highlight-time {
+    color: #d63384;
+    font-weight: bold;
+    font-size: 1.1em;
+    text-decoration: underline;
+    text-decoration-color: rgba(214, 51, 132, 0.3);
+    text-decoration-thickness: 2px;
+}
+
+.welcome-btn {
+    padding: 18px 50px;
+    font-size: 1.4em;
+    background: linear-gradient(135deg, #d63384 0%, #e83e8c 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 
+        0 10px 25px rgba(214, 51, 132, 0.5),
+        0 0 30px rgba(214, 51, 132, 0.3);
+    transition: all 0.3s ease;
+    animation: fadeInUp 1s ease-out 0.6s both;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.welcome-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 15px 35px rgba(214, 51, 132, 0.7),
+        0 0 50px rgba(214, 51, 132, 0.5);
+    background: linear-gradient(135deg, #e83e8c 0%, #ff4d94 100%);
+}
+
+.welcome-btn:active {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(214, 51, 132, 0.4);
+}
+
+/* Campo de clave secreta en el modal de bienvenida */
+.secret-input-container {
+    margin: 30px auto 25px;
+    max-width: 400px;
+    animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+.secret-label {
+    font-size: 1.1em;
+    color: #495057;
+    margin-bottom: 12px;
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.secret-input-container input[type="password"] {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1.1em;
+    border: 2px solid rgba(214, 51, 132, 0.3);
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #495057;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.secret-input-container input[type="password"]:focus {
+    outline: none;
+    border-color: #d63384;
+    box-shadow: 0 0 20px rgba(214, 51, 132, 0.3);
+    background: white;
+}
+
+.secret-input-container input[type="password"]::placeholder {
+    color: rgba(73, 80, 87, 0.5);
+}
+
+/* Footer Formal */
+.main-footer {
+    background: linear-gradient(135deg, rgba(214, 51, 132, 0.95) 0%, rgba(255, 154, 158, 0.95) 100%);
+    backdrop-filter: blur(15px);
+    padding: 50px 20px 30px;
+    margin-top: 80px;
+    border-top: 3px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.main-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-section {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.footer-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.footer-icon {
+    font-size: 3em;
+    margin-bottom: 15px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.footer-section h3 {
+    color: #ffffff;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.footer-section p {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.1em;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+.footer-divider {
+    height: 2px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+    margin: 30px auto;
+    max-width: 80%;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-timer-section {
+    text-align: center;
+    padding: 30px 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-timer-title {
+    color: #ffffff;
+    font-size: 1.8em;
+    margin-bottom: 25px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* Cronómetro Digital en Footer */
+.digital-timer-footer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    box-shadow: 
+        0 8px 30px rgba(0, 0, 0, 0.2),
+        inset 0 2px 5px rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.digital-timer-footer .timer-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 15px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 182, 193, 0.3) 100%);
+    border-radius: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.digital-timer-footer .timer-segment {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 15px;
+    background: rgba(0, 20, 40, 0.95);
+    border-radius: 10px;
+    border: 2px solid rgba(0, 255, 136, 0.4);
+    min-width: 70px;
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.5),
+        inset 0 2px 4px rgba(0, 255, 136, 0.3);
+}
+
+.digital-timer-footer .timer-value {
+    font-family: 'Courier New', monospace;
+    font-size: 2em;
+    font-weight: bold;
+    color: #d63384;
+    text-shadow: 
+        0 0 10px rgba(214, 51, 132, 1),
+        0 0 20px rgba(214, 51, 132, 0.8),
+        0 0 30px rgba(214, 51, 132, 0.6);
+    line-height: 1;
+    letter-spacing: 1px;
+    animation: glow 2s ease-in-out infinite;
+}
+
+.digital-timer-footer .timer-unit {
+    font-size: 0.7em;
+    color: #ffb6c1;
+    text-transform: uppercase;
+    margin-top: 5px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(255, 182, 193, 0.8);
+}
+
+.digital-timer-footer .timer-separator {
+    font-family: 'Courier New', monospace;
+    font-size: 2em;
+    font-weight: bold;
+    color: #d63384;
+    text-shadow: 
+        0 0 10px rgba(214, 51, 132, 0.8),
+        0 0 20px rgba(214, 51, 132, 0.5);
+    padding: 0 5px;
+    animation: blink 1s ease-in-out infinite;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-copyright {
+    color: #ffffff;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-weight: 500;
+}
+
+.footer-quote {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1em;
+    font-style: italic;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes glow {
+    0%, 100% {
+        text-shadow: 
+            0 0 10px rgba(214, 51, 132, 1),
+            0 0 20px rgba(214, 51, 132, 0.8),
+            0 0 30px rgba(214, 51, 132, 0.6);
+    }
+    50% {
+        text-shadow: 
+            0 0 15px rgba(214, 51, 132, 1),
+            0 0 30px rgba(214, 51, 132, 0.9),
+            0 0 45px rgba(214, 51, 132, 0.7);
+    }
+}
+
+@keyframes blink {
+    0%, 49% {
+        opacity: 1;
+    }
+    50%, 100% {
+        opacity: 0.3;
+    }
+}
+
+/* Animations */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(10deg);
+    }
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-15px);
+    }
+    60% {
+        transform: translateY(-7px);
+    }
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 8px 20px rgba(214, 51, 132, 0.3);
+    }
+    50% { 
+        transform: scale(1.1);
+        box-shadow: 0 12px 30px rgba(214, 51, 132, 0.5);
+    }
+}
+
+@keyframes heartbeat {
+    0%, 100% { 
+        transform: scale(1); 
+    }
+    10%, 30% { 
+        transform: scale(1.15);
+    }
+    20%, 40% { 
+        transform: scale(1.05); 
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 2.2em;
+    }
+    
+    .message-card {
+        padding: 20px;
+        margin: 20px 0;
+        flex-direction: column !important;
+    }
+    
+    .message-card.card-left,
+    .message-card.card-right {
+        flex-direction: column !important;
+    }
+    
+    .message-card h2 {
+        font-size: 1.5em;
+    }
+    
+    .message-card p {
+        font-size: 1em;
+    }
+    
+    /* Fotos en message-card responsive */
+    .card-photo-container {
+        width: 100%;
+        min-width: 100%;
+        height: 250px;
+        margin-bottom: 15px;
+    }
+    
+    /* Welcome Modal Responsive */
+    .welcome-content {
+        width: 98%;
+        max-width: none;
+        padding: 40px 25px;
+    }
+
+    .welcome-message {
+        font-size: 1.2em;
+    }
+    
+    /* Input de clave responsive */
+    .secret-input-container {
+        margin: 25px auto 20px;
+    }
+    
+    .secret-label {
+        font-size: 1em;
+    }
+    
+    .secret-input-container input[type="password"] {
+        padding: 12px 18px;
+        font-size: 1em;
+    }
+    
+    /* Footer responsive */
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .footer-section {
+        padding: 15px;
+    }
+    
+    .footer-icon {
+        font-size: 2.5em;
+    }
+    
+    .footer-section h3 {
+        font-size: 1.3em;
+    }
+    
+    .footer-section p {
+        font-size: 1em;
+    }
+    
+    .footer-timer-title {
+        font-size: 1.4em;
+    }
+    
+    /* Cronómetro en footer responsive */
+    .digital-timer-footer {
+        padding: 15px;
+    }
+    
+    .digital-timer-footer .timer-display {
+        padding: 10px;
+        gap: 5px;
+    }
+    
+    .digital-timer-footer .timer-segment {
+        padding: 8px 10px;
+        min-width: 55px;
+    }
+    
+    .digital-timer-footer .timer-value {
+        font-size: 1.5em;
+    }
+    
+    .digital-timer-footer .timer-unit {
+        font-size: 0.6em;
+    }
+    
+    .digital-timer-footer .timer-separator {
+        font-size: 1.5em;
+    }
+    
+    /* Cronómetro responsive */
+    .digital-timer {
+        padding: 10px;
+        margin: 0 10px;
+    }
+    
+    .timer-display {
+        padding: 8px;
+        gap: 3px;
+    }
+    
+    .timer-segment {
+        padding: 4px 6px;
+        min-width: 38px;
+    }
+    
+    .timer-value {
+        font-size: 1em;
+        letter-spacing: 0.5px;
+    }
+    
+    .timer-unit {
+        font-size: 0.55em;
+        margin-top: 2px;
+    }
+    
+    .timer-separator {
+        font-size: 1em;
+        padding: 0 1px;
+    }
+    
+    .container {
+        padding-top: 100px;
+    }
+    
+    /* Welcome Modal Responsive */
+    .welcome-content {
+        width: 98%;
+        max-width: none;
+        padding: 40px 25px;
+    }
+
+    .welcome-message {
+        font-size: 1.2em;
+    }
+    
+    /* Input de clave responsive */
+    .secret-input-container {
+        margin: 25px auto 20px;
+    }
+    
+    .secret-label {
+        font-size: 1em;
+    }
+    
+    .secret-input-container input[type="password"] {
+        padding: 12px 18px;
+        font-size: 1em;
+    }
+    
+    /* Footer responsive para móviles pequeños */
+    .main-footer {
+        padding: 40px 15px 25px;
+    }
+    
+    .footer-timer-title {
+        font-size: 1.2em;
+    }
+    
+    /* Cronómetro en footer para móviles pequeños */
+    .digital-timer-footer {
+        padding: 12px;
+    }
+    
+    .digital-timer-footer .timer-display {
+        padding: 8px;
+        gap: 3px;
+    }
+    
+    .digital-timer-footer .timer-segment {
+        padding: 6px 8px;
+        min-width: 45px;
+    }
+    
+    .digital-timer-footer .timer-value {
+        font-size: 1.2em;
+    }
+    
+    .digital-timer-footer .timer-unit {
+        font-size: 0.55em;
+    }
+    
+    .digital-timer-footer .timer-separator {
+        font-size: 1.2em;
+    }
+    
+    /* Cronómetro responsive */
+    .digital-timer {
+        padding: 6px;
+        margin: 0;
+    }
+
+    .timer-display {
+        padding: 5px;
+        gap: 2px;
+    }
+    
+    .timer-segment {
+        padding: 2px 4px;
+        min-width: 26px;
+    }
+    
+    .timer-value {
+        font-size: 0.75em;
+        letter-spacing: 0.3px;
+    }
+    
+    .timer-unit {
+        font-size: 0.45em;
+        margin-top: 1px;
+    }
+    
+    .timer-separator {
+        font-size: 0.75em;
+        padding: 0 1px;
+    }
+    
+    .container {
+        padding: 40px 20px; /* Padding normal */
+    }
+}
+
+@media (max-width: 600px) {
+    .heart {
+        font-size: 20px; /* Corazones más pequeños en móvil */
+    }
+    
+    .modal-content {
+        width: 98%;
+        margin: 20px auto;
+        padding: 15px;
+    }
+    
+    /* Modal final responsive en móviles */
+    #finalModal .modal-content {
+        width: 98%;
+        padding: 20px 15px;
+        max-height: 85vh;
+    }
+    
+    #finalModal #finalText > div {
+        padding: 15px !important;
+        font-size: 0.9em !important;
+    }
+    
+    #finalModal #finalText p {
+        font-size: 1em !important;
+        margin: 10px 0 !important;
+        line-height: 1.6 !important;
+    }
+    
+    #finalModal #finalText strong {
+        font-size: 1em !important;
+    }
+    
+    #finalModal #finalText div[style*="background"] {
+        padding: 12px !important;
+        margin: 15px 0 !important;
+    }
+    
+    /* Welcome Modal para móviles pequeños */
+    .welcome-content {
+        padding: 30px 20px;
+        margin: 15px auto !important;
+    }
+    
+    .welcome-message {
+        font-size: 1em;
+    }
+    
+    /* Cronómetro en móviles pequeños */
+    .digital-timer {
+        padding: 15px;
+        margin: 20px 0;
+    }
+    
+    .timer-display {
+        gap: 2px;
+        padding: 8px;
+    }
+    
+    .timer-segment {
+        padding: 6px 8px;
+        min-width: 50px;
+    }
+    
+    .timer-value {
+        font-size: 1.2em;
+    }
+    
+    .timer-unit {
+        font-size: 0.6em;
+    }
+    
+    .timer-separator {
+        font-size: 1.2em;
+        padding: 0 1px;
+    }
+    
+    .welcome-btn {
+        padding: 12px 30px;
+        font-size: 1.1em;
+    }
+    
+    .special-question {
+        font-size: 1.2em !important;
+    }
+    
+    .buttons-container {
+        gap: 15px;
+    }
+    
+    .answer-btn {
+        min-width: 150px;
+        font-size: 1em;
+        padding: 12px 25px;
+    }
+    
+    .music-control {
+        top: 15px;
+        right: 15px;
+    }
+    
+    .music-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+}
+
+/* Mejoras para pantallas muy pequeñas */
+@media (max-width: 360px) {
+    .main-title {
+        font-size: 1.5em;
+        padding: 0 10px;
+    }
+    
+    .message-card {
+        margin: 15px 0;
+        padding: 15px;
+    }
+    
+    .message-card h2 {
+        font-size: 1.3em;
+    }
+    
+    .message-card p {
+        font-size: 0.9em;
+    }
+    
+    /* Fotos en pantallas muy pequeñas */
+    .card-photo-container {
+        width: 100%;
+        min-width: 100%;
+        height: 200px;
+    }
+    
+    /* Footer en móviles muy pequeños */
+    .footer-icon {
+        font-size: 2em;
+    }
+    
+    .footer-section h3 {
+        font-size: 1.1em;
+    }
+    
+    .footer-section p {
+        font-size: 0.95em;
+    }
+    
+    .footer-copyright {
+        font-size: 1em;
+    }
+    
+    .footer-quote {
+        font-size: 0.9em;
+    }
+    
+    /* Cronómetro en footer para móviles muy pequeños */
+    .digital-timer-footer .timer-display {
+        gap: 2px;
+        padding: 6px;
+    }
+    
+    .digital-timer-footer .timer-segment {
+        padding: 5px 6px;
+        min-width: 38px;
+    }
+    
+    .digital-timer-footer .timer-value {
+        font-size: 1em;
+    }
+    
+    .digital-timer-footer .timer-unit {
+        font-size: 0.5em;
+    }
+    
+    .digital-timer-footer .timer-separator {
+        font-size: 1em;
+    }
+    
+    /* Cronómetro aún más compacto */
+    .digital-timer {
+        padding: 5px;
+    }
+    
+    .timer-display {
+        padding: 4px;
+        gap: 1px;
+    }
+    
+    .timer-segment {
+        padding: 2px 3px;
+        min-width: 24px;
+    }
+    
+    .timer-value {
+        font-size: 0.7em;
+    }
+    
+    .timer-unit {
+        font-size: 0.4em;
+    }
+    
+    .timer-separator {
+        font-size: 0.7em;
+    }
+    
+    .container {
+        padding: 40px 10px; /* Padding normal con menos espacio lateral */
+    }
+}
+
+/* Optimización para touch devices */
+@media (hover: none) and (pointer: coarse) {
+    .message-card:hover {
+        transform: none; /* Desactivar hover en touch */
+    }
+    
+    .answer-btn:hover {
+        transform: none;
+    }
+    
+    /* Hacer los botones más grandes para touch */
+    .answer-btn, .music-btn, #submitSecret {
+        min-height: 48px; /* Tamaño mínimo recomendado para touch */
+        touch-action: manipulation;
+    }
+}
+
+/* Asegurar que el modal sea completamente scrollable */
+.modal.welcome-modal {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+/* Prevenir que el contenido se corte en pantallas pequeñas */
+@media (max-height: 700px) {
+    .welcome-content {
+        margin: 15px auto !important;
+    }
+    
+    .modal-content {
+        margin: 15px auto !important;
+    }
+}
+
+@media (max-height: 600px) {
+    .welcome-content {
+        padding: 25px 20px !important;
+    }
+    
+    .welcome-message {
+        font-size: 1em !important;
+        margin-bottom: 20px !important;
+    }
+    
+    .digital-timer {
+        margin: 15px 0 !important;
+        padding: 10px !important;
+    }
+    
+    .timer-value {
+        font-size: 1.3em !important;
+    }
+    
+    .welcome-btn {
+        padding: 12px 30px !important;
+        font-size: 1.1em !important;
+    }
+}

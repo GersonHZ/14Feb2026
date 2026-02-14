@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensaje Especial ❤️</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Audio de fondo -->
+    <audio id="backgroundMusic" preload="auto">
+        <source src="assets/audio/onlyHope.mp3" type="audio/mpeg">
+        <!-- Fallback si no se encuentra el audio -->
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <!-- Modal de bienvenida -->
+    <div id="welcomeModal" class="modal welcome-modal">
+        <div class="modal-content welcome-content">
+            <div class="welcome-text-container">
+                <p class="welcome-message">
+                    ¿Quieres ser tu propio jefe?<br>
+                    Un cafecito y pan con mantequilla?
+                </p>
+                
+                <!-- Campo de clave secreta -->
+                <div class="secret-input-container">
+                    <p class="secret-label">🔐 Selecciona la fecha secreta para continuar
+                        <br>Ya tu samsung 😜
+                    </p>
+                    <input type="date" id="secretInput">
+                </div>
+                
+                <button id="welcomeContinue" class="welcome-btn">
+                    Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Mensajes de amor principales -->
+        <div class="love-messages">
+            <h1 class="main-title">Te amo ❤️</h1>
+            
+            <div class="message-card card-left" data-card="1">
+                <div class="card-photo-container">
+                    <img class="card-photo active" src="assets/foto/amorcitos1.jpeg" alt="Recuerdo 1">
+                </div>
+                <div class="card-text-content">
+                    <h2>🦋 Tu amor me transforma</h2>
+                    <p>Es verdad que el cambio es personal, pero no sabes lo mejor persona que soy cada día gracias a ti
+                        <br>Nuestras salidas a tomar emoliente
+                        <br>Las tardes viendo peliculas
+                        <br>Las salidas al cine
+                        <br>Las salidas a comer que tanto odias ajjajajajaj
+                        <br>Los viajes y todo lo demás me ayudaron a conocerte y mejorar como persona, me ayudaron a ser mejor para ti y para mí, gracias por ser mi inspiración para ser mejor cada día, te amo mi amorcita hermosa
+                    </p>
+                    <br>Eres quien me corrige si estoy mal por eso TE AMO
+                </div>
+            </div>
+
+            <div class="message-card card-right" data-card="2">
+                <div class="card-photo-container">
+                    <img class="card-photo active" src="assets/foto/amorcitos8.jpeg" alt="Recuerdo 2">
+                </div>
+                <div class="card-text-content">
+                    <h2>🌹 Tu sonrisa ilumina mi mundo</h2>
+                    <p>Mi chamba desde que estamos juntos es mantener esa sonrisa, 
+                        <br>por interes propio te diré, 
+                        <br>ver tu sonrisa muchas veces fue lo más bonito de mi día, 
+                        <br>abrazarte y sentirte cerca es todo lo que quiero
+                    </p>
+                    <br>Eres quien me calma si estoy molesto por eso TE AMO
+                </div>
+            </div>
+
+            <div class="message-card card-left" data-card="3">
+                <div class="card-photo-container">
+                    <img class="card-photo active" src="assets/foto/amorcitos15.jpeg" alt="Recuerdo 3">
+                </div>
+                <div class="card-text-content">
+                    <h2>💝 Eres de quien aprendo</h2>
+                    <p>Por más que trate de mostrate algo nuevo soy yo el que siempre aprende algo de ti
+                        <br>Aprendí a escuchar
+                        <br>Aprendí a ser paciente
+                        <br>Aprendí a no entender como era mi vida sin ti
+                        <br>Aprendí a valorar cada momento a tu lado
+                        <br>Aprendí que el amor verdadero se construye día a día
+                        <br>y estoy aquí para hacerlo contigo
+                    </p>
+                    <br>Eres mi maestra en muchas cosas que desconozco por eso TE AMO
+                </div>
+            </div>
+
+            <div class="message-card card-right" data-card="4">
+                <div class="card-photo-container">
+                    <img class="card-photo active" src="assets/foto/amorcitos22.jpeg" alt="Recuerdo 4">
+                </div>
+                <div class="card-text-content">
+                    <h2>💖 Eres mi paz en mi mundo de estrés</h2>
+                    <p>Aunque me preguntes 100 veces al dìa... <br>"¿Me extrañaste? <br>¿Me amas? <br>¿Me quieres ver? 
+                        <br>¿viste mi nuevo corte? <br>¿Viste mis uñas? <br>o las mil cosas que te pasan dìa a dìa" 
+                        <br>sabes que pondré pausa a lo que este haciendo te abrazaré y escucharé
+                    </p>
+                    <br>Eres mi prioridad, mi refugio y mi alegría. TE AMO
+                </div>
+            </div>
+
+            <div class="floating-hearts">
+                <span class="heart">💖</span>
+                <span class="heart">💕</span>
+                <span class="heart">💗</span>
+                <span class="heart">💝</span>
+                <span class="heart">🌹</span>
+                <span class="heart">✨</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Control de música -->
+    <div class="music-control">
+        <button id="musicToggle" class="music-btn" title="Reproducir/Pausar música">
+            🎵
+        </button>
+    </div>
+
+    <!-- Video miniatura -->
+    <div id="videoThumbnail" class="video-thumbnail">
+        <video id="backgroundVideo" muted autoplay>
+            <!-- Los videos se cargarán dinámicamente desde JavaScript -->
+        </video>
+        <div class="video-info">
+            <span id="videoCounter">1/1</span>
+        </div>
+    </div>
+
+    <!-- Modal para la pregunta especial -->
+    <div id="questionModal" class="modal">
+        <div class="modal-content question-modal">
+            <h2>💕 Una preguntita pe</h2>
+            <p class="special-question">¿Quieres renovar contrato y ser mi amorcita 1 año más y pasar este 14 de febrero juntos?</p>
+            <p class="special-question">¿Vas querer o no vas querer?</p>
+            <div class="buttons-container">
+                <button id="yesButton" class="answer-btn yes-btn">¡Go, si la hago!</button>
+                <button id="noButton" class="answer-btn no-btn">Ahi noma joven</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Respuesta final -->
+    <div id="finalMessage" class="modal">
+        <div class="modal-content final-content">
+            <h2 id="finalTitle">Obviamente dirías que sí</h2>
+            <p id="finalText">
+            </p>
+            <div class="celebration">
+                <span class="celebration-heart">💖</span>
+                <span class="celebration-heart">🎉</span>
+                <span class="celebration-heart">💕</span>
+                <span class="celebration-heart">🌹</span>
+                <span class="celebration-heart">✨</span>
+            </div>
+            <button id="closeFinalMessage" class="welcome-btn" style="margin-top: 25px;">
+                💕 Cerrar 💕
+            </button>
+        </div>
+    </div>
+
+    <!-- Pie de página formal -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-icon">💕</div>
+                <h3>Nuestro Amor</h3>
+                <p>Amo ser quiien te roba sonrisas mi vida, amo que seas tù en quien encuentre paz, eres lo màs bonito que paso en mi vida</p>
+            </div>
+
+            <div class="footer-section">
+                <div class="footer-icon">🌹</div>
+                <h3>Momentos Inolvidables</h3>
+                <p>Cada pequeña aventura a tu lado desde un pequeño viaje, hasta llegar a convivir, es maravilloso, nos falta mucho por vivir
+                    <br> quiero vivir más cosas contigo mi amor te amo gordita de UP
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <div class="footer-icon">✨</div>
+                <h3>6 Meses</h3>
+                <p>lo que dijiste que dura el amor y prometi demostrarte que no, el amor es algo que se construye día a día, 
+                    y estoy aquí para hacerlo contigo no 6 meses o un año o los 3 años que dura segùn tus libros o tiktoks, una vida entera si es posible</p>
+            </div>
+        </div>
+
+        <div class="footer-divider"></div>
+
+        <!-- Cronómetro digital en el footer -->
+        <div class="footer-timer-section">
+            <h3 class="footer-timer-title">💖 Tiempo de Amor Compartido 💖</h3>
+            <div class="digital-timer-footer">
+                <div class="timer-display">
+                    <div class="timer-segment">
+                        <span id="timerYears" class="timer-value">0</span>
+                        <span class="timer-unit">Años</span>
+                    </div>
+                    <div class="timer-separator">:</div>
+                    <div class="timer-segment">
+                        <span id="timerMonths" class="timer-value">0</span>
+                        <span class="timer-unit">Meses</span>
+                    </div>
+                    <div class="timer-separator">:</div>
+                    <div class="timer-segment">
+                        <span id="timerDays" class="timer-value">0</span>
+                        <span class="timer-unit">Días</span>
+                    </div>
+                    <div class="timer-separator">:</div>
+                    <div class="timer-segment">
+                        <span id="timerHours" class="timer-value">00</span>
+                        <span class="timer-unit">Horas</span>
+                    </div>
+                    <div class="timer-separator">:</div>
+                    <div class="timer-segment">
+                        <span id="timerMinutes" class="timer-value">00</span>
+                        <span class="timer-unit">Min</span>
+                    </div>
+                    <div class="timer-separator">:</div>
+                    <div class="timer-segment">
+                        <span id="timerSeconds" class="timer-value">00</span>
+                        <span class="timer-unit">Seg</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-divider"></div>
+
+        <div class="footer-bottom">
+            <p class="footer-copyright">
+                💝 Hecho con amor para ti | 14 de Febrero de 2026 💝
+            </p>
+            <p class="footer-quote">
+                "Gracias totales" - Cerati
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
