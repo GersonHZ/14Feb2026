@@ -128,19 +128,24 @@
     <!-- Video miniatura -->
     <div id="videoThumbnail" class="video-thumbnail">
         <video id="backgroundVideo" muted autoplay>
-            <!-- Los videos se cargarán dinámicamente desde JavaScript -->
         </video>
         <div class="video-info">
             <span id="videoCounter">1/1</span>
         </div>
     </div>
 
-    <!-- Modal para la pregunta especial -->
     <div id="questionModal" class="modal">
         <div class="modal-content question-modal">
             <h2>💕 Una preguntita pe</h2>
-            <p class="special-question">¿Quieres renovar contrato y ser mi amorcita 1 año más y pasar este 14 de febrero juntos?</p>
-            <p class="special-question">¿Vas querer o no vas querer?</p>
+            <div class="question-content-wrapper">
+                <div class="question-text-section">
+                    <p class="special-question">¿Quieres renovar contrato y ser mi amorcita 1 año más y pasar este 14 de febrero juntos?</p>
+                    <p class="special-question">¿Vas querer o no vas querer?</p>
+                </div>
+                <div class="question-image-section">
+                    <img src="assets/foto/porfa.jpeg" alt="Por favor" class="porfa-image">
+                </div>
+            </div>
             <div class="buttons-container">
                 <button id="yesButton" class="answer-btn yes-btn">¡Go, si la hago!</button>
                 <button id="noButton" class="answer-btn no-btn">Ahi noma joven</button>

@@ -16,10 +16,12 @@ let videoCounter = null;
 // Variables para el control del botón "No"
 let isMovingButton = false;
 let buttonMoveInterval = null;
+let clickAttempts = 0;
+const maxAttempts = 15;
 
 // Variables para el control de videos
 let videoPlaylist = [
-    'assets/video/100AÑOS.mp4',
+    'assets/video/AMORcarro.mp4',
     'assets/video/AMORboda.mp4',
     'assets/video/AMORcaminando.mp4',
     'assets/video/AMORchau.mp4',
@@ -138,7 +140,16 @@ document.addEventListener('DOMContentLoaded', function() {
         finalMessage.style.display = 'none';
         updateVideoVisibility();
         
-        // Volver a la playlist normal
+        // Verificar si necesitamos reiniciar el modal de pregunta (caso "No")
+        const finalTitle = document.getElementById('finalTitle');
+        if (finalTitle && finalTitle.textContent.includes('estás segura')) {
+            // Era un mensaje de "No", volver a mostrar el modal de pregunta
+            showQuestionModal();
+            resetNoButton();
+            return;
+        }
+        
+        // Volver a la playlist normal (solo para el caso "Sí")
         console.log('🔄 Volviendo a la playlist normal');
         isPlayingSpecialSong = false;
         isTransitioningAudio = true;
@@ -498,15 +509,6 @@ function showFinalMessage(isYes) {
                 border-radius: 20px;
                 backdrop-filter: blur(10px);
             ">
-                <p style="
-                    margin: 20px 0;
-                    font-size: 1.3em;
-                    font-weight: 600;
-                    color: #ff6b9d;
-                    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-                ">
-                    Bueno amorcita 💝
-                </p>
                 
                 <div style="
                     background: rgba(255, 107, 157, 0.15);
@@ -524,68 +526,28 @@ function showFinalMessage(isYes) {
                     <p style="margin: 10px 0; font-size: 1.1em;">
                         🌻 <strong>Nada de flores</strong> porque ya te regalé girasoles y rosas
                     </p>
-                </div>
-                
-                <p style="
-                    margin: 25px 0;
-                    font-size: 1.25em;
-                    font-weight: 700;
-                    color: #ffd93d;
-                    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-                    animation: pulse 2s ease-in-out infinite;
-                ">
-                    ¿Cuál es el plan dirás? 🤔
-                </p>
-                
-                <div style="
-                    background: linear-gradient(135deg, rgba(255, 107, 157, 0.2) 0%, rgba(255, 23, 68, 0.2) 100%);
-                    padding: 20px;
-                    margin: 25px 0;
-                    border-radius: 15px;
-                    border: 2px solid rgba(255, 107, 157, 0.3);
-                ">
-                    <p style="
-                        margin: 15px 0;
-                        font-size: 1.2em;
-                        font-weight: 600;
-                        color: #fff;
-                        line-height: 1.8;
-                    ">
-                        💖 Pues seguir amándote y que este tipo de detalles no falte,<br>
-                        <span style="color: #ffd93d;">esa es mi chamba</span>
+                    <p style="margin: 10px 0; font-size: 1.1em;">
+                    <strong>¿Cuál es el plan dirás?</strong> 🤔Pues seguir amándote y que este tipo de detalles no falte,
+                    <br>esa es mi chamba
                     </p>
-                </div>
-                
-                <div style="
-                    background: rgba(255, 217, 61, 0.15);
-                    border: 2px dashed #ffd93d;
-                    padding: 18px;
-                    margin: 25px 0;
-                    border-radius: 12px;
-                ">
-                    <p style="
-                        margin: 0;
-                        font-size: 1.15em;
-                        color: #ffd93d;
-                        font-weight: 500;
-                    ">
+                    <p style="margin: 10px 0; font-size: 1.1em;">
                         🍗 Y bueno me merezco una salchipapita creo,<br>
                         con su broaster y su ajicito <strong>CREO</strong><br>
                         por ser tan chévere 😎
                     </p>
-                </div>
                 
-                <p style="
-                    margin: 30px 0 20px 0;
-                    font-size: 2em;
-                    font-weight: bold;
-                    color: #ff1744;
-                    text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
-                    animation: heartbeat 1.5s ease-in-out infinite;
-                    letter-spacing: 2px;
-                ">
-                    TE AMO ❤️
-                </p>
+                    <p style="
+                        margin: 30px 0 20px 0;
+                        font-size: 2em;
+                        font-weight: bold;
+                        color: #ff1744;
+                        text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+                        animation: heartbeat 1.5s ease-in-out infinite;
+                        letter-spacing: 2px;
+                    ">
+                        TE AMO ❤️
+                    </p>
+                </div>
             </div>
             
             <style>
@@ -666,9 +628,6 @@ function showFinalMessage(isYes) {
 
 // Configurar el comportamiento especial del botón "No"
 function setupNoButtonBehavior() {
-    let clickAttempts = 0;
-    const maxAttempts = 1;
-    
     // Función para obtener una posición aleatoria válida
     function getRandomPosition() {
         const modal = document.querySelector('.question-modal');
@@ -778,12 +737,7 @@ function setupNoButtonBehavior() {
         if (clickAttempts >= maxAttempts) {
             hideQuestionModal();
             showFinalMessage(false);
-            
-            setTimeout(() => {
-                finalMessage.style.display = 'none';
-                showQuestionModal();
-                resetNoButton();
-            }, 3000);
+            resetNoButton();
         } else {
             // Mover el botón cuando se hace clic
             moveButton();
