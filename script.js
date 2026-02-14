@@ -626,105 +626,115 @@ function showFinalMessage(isYes) {
     updateVideoVisibility();
 }
 
+// Función para obtener una posición aleatoria válida del botón "No"
+function getRandomPosition() {
+    const modal = document.querySelector('.question-modal');
+    if (!modal) return { x: 100, y: 100 };
+    
+    const modalRect = modal.getBoundingClientRect();
+    const buttonRect = noButton.getBoundingClientRect();
+    
+    // Área disponible dentro del modal con márgenes de seguridad
+    const padding = 20;
+    const minX = padding;
+    const maxX = Math.max(minX + 80, modalRect.width - buttonRect.width - padding);
+    const minY = padding + 80; // Debajo del título y la imagen
+    const maxY = Math.max(minY + 80, modalRect.height - buttonRect.height - padding);
+    
+    // Calcular posición aleatoria dentro del rango válido
+    const x = Math.min(Math.max(minX, Math.random() * (maxX - minX) + minX), maxX);
+    const y = Math.min(Math.max(minY, Math.random() * (maxY - minY) + minY), maxY);
+    
+    return { x, y };
+}
+
+// Función para mover el botón "No"
+function moveButton() {
+    if (isMovingButton) return;
+    
+    isMovingButton = true;
+    const newPos = getRandomPosition();
+    
+    // Debug: Verificar posiciones
+    const modal = document.querySelector('.question-modal');
+    if (modal) {
+        const modalRect = modal.getBoundingClientRect();
+        console.log(`📦 Modal: ${modalRect.width}x${modalRect.height}`);
+        console.log(`🎯 Nueva posición: x=${newPos.x}, y=${newPos.y}`);
+    }
+    
+    // Aplicar nueva posición con animación suave
+    noButton.style.position = 'absolute';
+    noButton.style.transition = 'all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+    noButton.style.left = newPos.x + 'px';
+    noButton.style.top = newPos.y + 'px';
+    noButton.style.transform = 'scale(0.9) rotate(' + (Math.random() * 20 - 10) + 'deg)';
+    noButton.style.zIndex = '10'; // Asegurar que esté encima de otros elementos
+    
+    // Restaurar después de la animación
+    setTimeout(() => {
+        noButton.style.transform = 'scale(1) rotate(0deg)';
+        isMovingButton = false;
+    }, 300);
+    
+    clickAttempts++;
+    
+    // Mensaje motivacional después de varios intentos
+    switch (clickAttempts) {
+        case 1:
+            showTemporaryMessage("¡Uy, parece que te equivocaste! 😄");
+            break;
+        case 2:
+            showTemporaryMessage("Otravez? mmmm...... 🤔");
+            break;
+        case 3:
+            showTemporaryMessage("¡Sé que quieres decir que sí! 💖");
+            break;
+        case 4:
+            showTemporaryMessage("Ya peeeeeeeeeeeeeeeeeeeeeeeeee...");
+            break;
+        case 5:
+            showTemporaryMessage("Ya ves como eressssssssssssss");
+            break;
+        case 6:
+            showTemporaryMessage("Me lo voy molestarshhhhhhhhh");
+            break;
+        case 7:
+            showTemporaryMessage("Es porque soy negro verdad?");
+            break;
+        case 8:
+            showTemporaryMessage("Ahhhh pero luego no me insistas!");
+            break;
+        case 9:
+            showTemporaryMessage("Yo que queria darte mi tesorito");
+            break;
+        case 10:
+            showTemporaryMessage("Ya no diré nada");
+            break;
+        case 11:
+            showTemporaryMessage("Si no quieres, no quieres pe");
+            break;
+        case 12:
+            showTemporaryMessage("...");
+            break;
+        case 13:
+            showTemporaryMessage("Asi va ser...");
+            break;
+        case 14:
+            showTemporaryMessage("Todo un día haciendo la pagina para que me chotees");
+            break;
+        case 15:
+            showTemporaryMessage("Me hubiera ido a comer una salchipapa, la seño ya cerró");
+            break;
+    }
+}
+
 // Configurar el comportamiento especial del botón "No"
 function setupNoButtonBehavior() {
-    // Función para obtener una posición aleatoria válida
-    function getRandomPosition() {
-        const modal = document.querySelector('.question-modal');
-        const modalRect = modal.getBoundingClientRect();
-        const buttonRect = noButton.getBoundingClientRect();
-        
-        // Área disponible dentro del modal
-        const minX = 20;
-        const maxX = modalRect.width - buttonRect.width - 20;
-        const minY = 100; // Debajo del texto
-        const maxY = modalRect.height - buttonRect.height - 20;
-        
-        return {
-            x: Math.random() * (maxX - minX) + minX,
-            y: Math.random() * (maxY - minY) + minY
-        };
-    }
-    
-    // Función para mover el botón
-    function moveButton() {
-        if (isMovingButton) return;
-        
-        isMovingButton = true;
-        const newPos = getRandomPosition();
-        
-        // Aplicar nueva posición con animación suave
-        noButton.style.position = 'absolute';
-        noButton.style.transition = 'all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-        noButton.style.left = newPos.x + 'px';
-        noButton.style.top = newPos.y + 'px';
-        noButton.style.transform = 'scale(0.9) rotate(' + (Math.random() * 20 - 10) + 'deg)';
-        
-        // Restaurar después de la animación
-        setTimeout(() => {
-            noButton.style.transform = 'scale(1) rotate(0deg)';
-            isMovingButton = false;
-        }, 300);
-        
-        clickAttempts++;
-        
-        // Mensaje motivacional después de varios intentos
-        switch (clickAttempts) {
-            case 1:
-                showTemporaryMessage("¡Uy, parece que te equivocaste! 😄");
-                break;
-            case 2:
-                showTemporaryMessage("Otravez? mmmm...... 🤔");
-                break;
-            case 3:
-                showTemporaryMessage("¡Sé que quieres decir que sí! 💖");
-                break;
-            case 4:
-                showTemporaryMessage("Ya peeeeeeeeeeeeeeeeeeeeeeeeee...");
-                break;
-            case 5:
-                showTemporaryMessage("Ya ves como eressssssssssssss");
-                break;
-            case 6:
-                showTemporaryMessage("Me lo voy molestarshhhhhhhhh");
-                break;
-            case 7:
-                showTemporaryMessage("Es porque soy negro verdad?");
-                break;
-            case 8:
-                showTemporaryMessage("Ahhhh pero luego no me insistas!");
-                break;
-            case 9:
-                showTemporaryMessage("Yo que queria darte mi tesorito");
-                break;
-            case 10:
-                showTemporaryMessage("Ya no diré nada");
-                break;
-            case 11:
-                showTemporaryMessage("Si no quieres, no quieres pe");
-                break;
-            case 12:
-                showTemporaryMessage("...");
-                break;
-            case 13:
-                showTemporaryMessage("Asi va ser...");
-                break;
-            case 14:
-                showTemporaryMessage("Todo un día haciendo la pagina para que me chotees");
-                break;
-            case 15:
-                showTemporaryMessage("Me hubiera ido a comer una salchipapa, la seño ya cerró");
-                break;
-        }
-    }
-    
     // Event listeners para el botón "No"
     // SOLO se mueve cuando se hace clic, NO en hover
-    // noButton.addEventListener('mouseenter', moveButton); // DESACTIVADO
-    // noButton.addEventListener('mouseover', moveButton);  // DESACTIVADO
-    // noButton.addEventListener('focus', moveButton);      // DESACTIVADO
     
-    // Manejar clics persistentes
+    // Manejar clics en escritorio
     noButton.addEventListener('click', function(e) {
         e.preventDefault();
         
@@ -743,6 +753,23 @@ function setupNoButtonBehavior() {
             moveButton();
         }
     });
+    
+    // Manejar toques en móviles
+    noButton.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        
+        // Registrar el tiempo del toque para evitar duplicación con click
+        window.lastTouchTime = Date.now();
+        
+        if (clickAttempts >= maxAttempts) {
+            hideQuestionModal();
+            showFinalMessage(false);
+            resetNoButton();
+        } else {
+            // Mover el botón cuando se toca
+            moveButton();
+        }
+    }, { passive: false });
 }
 
 // Función para resetear el botón "No"
@@ -1041,28 +1068,13 @@ function isMobileDevice() {
 // Ajustar comportamiento para móviles
 function setupMobileBehavior() {
     if (isMobileDevice()) {
-        // En móviles, agregar evento táctil para el botón "No"
-        noButton.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            
-            // Registrar el tiempo del toque para evitar duplicación con click
-            if (window.lastTouchTime === undefined) {
-                window.lastTouchTime = 0;
-            }
-            window.lastTouchTime = Date.now();
-            
-            if (!isMovingButton) {
-                moveButton();
-            }
-        }, { passive: false });
-        
         // En móviles, hacer los videos más pequeños
         if (videoThumbnail) {
             videoThumbnail.style.width = '100px';
             videoThumbnail.style.height = '75px';
         }
         
-        console.log('🎵 Optimizado para móvil');
+        console.log('📱 Optimizado para móvil');
     }
 }
 

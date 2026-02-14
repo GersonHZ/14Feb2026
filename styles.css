@@ -250,6 +250,9 @@ body::before {
 /* Question Modal */
 .question-modal {
     max-width: 600px;
+    position: relative; /* Importante: permite posicionamiento absoluto del botón */
+    min-height: 550px; /* Altura mínima para permitir movimiento del botón */
+    overflow: hidden; /* Evita que el botón se salga del modal */
 }
 
 /* Estilos especiales para el modal final (Sí/No) */
@@ -331,6 +334,10 @@ body::before {
     gap: 20px;
     justify-content: center;
     flex-wrap: wrap;
+    position: static; /* Cambiado a static para no interferir con el posicionamiento */
+    min-height: 80px; /* Altura mínima reducida */
+    padding: 20px;
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
 }
 
 .answer-btn {
@@ -347,6 +354,8 @@ body::before {
 .yes-btn {
     background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
     color: white;
+    position: relative; /* Mantener posición relativa */
+    z-index: 1; /* Por debajo del botón "No" cuando se mueve */
 }
 
 .yes-btn:hover {
@@ -357,11 +366,13 @@ body::before {
 .no-btn {
     background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
     color: white;
-    position: relative;
+    position: relative; /* Inicialmente relativo */
+    z-index: 5; /* Por encima cuando se mueve */
 }
 
 .no-btn.moving {
     transition: all 0.3s ease;
+    z-index: 20; /* Asegurar que esté siempre visible cuando se mueve */
 }
 
 /* Final Message */
@@ -1167,6 +1178,21 @@ body::before {
     .container {
         padding: 40px 20px; /* Padding normal */
     }
+    
+    /* Modal de pregunta en tablets */
+    .question-modal {
+        min-height: 600px; /* Más altura en tablets */
+    }
+    
+    /* Contenedor de botones en tablets */
+    .buttons-container {
+        min-height: 80px; /* Altura reducida */
+        padding: 30px 15px;
+    }
+    
+    .answer-btn {
+        position: relative;
+    }
 }
 
 @media (max-width: 600px) {
@@ -1217,28 +1243,24 @@ body::before {
         font-size: 1em;
     }
     
-    /* Modal de pregunta responsive */
+    /* Modal de pregunta responsive para móviles pequeños */
     .question-modal {
-        max-width: 98%;
+        min-height: 650px; /* Más altura para móviles */
     }
     
-    .question-content-wrapper {
-        flex-direction: column;
-        gap: 20px;
+    /* Contenedor de botones en móviles pequeños */
+    .buttons-container {
+        min-height: 80px; /* Altura reducida */
+        padding: 40px 15px;
     }
+
     
-    .question-text-section {
-        min-width: 100%;
-    }
-    
-    .special-question {
-        font-size: 1.2em !important;
-        margin-bottom: 20px !important;
-    }
-    
-    .porfa-image {
-        width: 150px;
-        height: 150px;
+    .answer-btn {
+        min-width: 150px;
+        font-size: 1em;
+        padding: 12px 25px;
+        touch-action: manipulation; /* Mejor respuesta táctil */
+        position: relative;
     }
     
     /* Cronómetro en móviles pequeños */
@@ -1281,12 +1303,6 @@ body::before {
     
     .buttons-container {
         gap: 15px;
-    }
-    
-    .answer-btn {
-        min-width: 150px;
-        font-size: 1em;
-        padding: 12px 25px;
     }
     
     .music-control {
@@ -1401,6 +1417,17 @@ body::before {
     
     .container {
         padding: 40px 10px; /* Padding normal con menos espacio lateral */
+    }
+    
+    /* Modal de pregunta en pantallas muy pequeñas */
+    .question-modal {
+        min-height: 680px; /* Aún más altura */
+    }
+    
+    /* Contenedor de botones en pantallas muy pequeñas */
+    .buttons-container {
+        min-height: 80px;
+        padding: 50px 10px;
     }
 }
 
